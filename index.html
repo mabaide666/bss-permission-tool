@@ -63,13 +63,16 @@ fetch('data.json')
 .then(data=>{
     data.menus.forEach(item=>{
         let name = item.full_path.split(' / ').pop();
-if(!demoData[name]){
-    demoData[name] = [];
-}
-demoData[name].push(item.roles.join("、"));
-    });
-});
+let roleText = item.roles.join("、");
 
+if(roleText){
+    if(!demoData[name]){
+        demoData[name] = [];
+    }
+    demoData[name].push(roleText);
+}
+});
+});
 function search(){
 let key=document.getElementById("menu").value.trim();
 document.getElementById("result").innerHTML=
