@@ -63,15 +63,19 @@ fetch('data.json')
 .then(data=>{
     data.menus.forEach(item=>{
         let name = item.full_path.split(' / ').pop();
-        demoData[name] =
-            "有权限岗位： " + item.roles.join("、");
+if(!demoData[name]){
+    demoData[name] = [];
+}
+demoData[name].push(item.roles.join("、"));
     });
 });
 
 function search(){
 let key=document.getElementById("menu").value.trim();
 document.getElementById("result").innerHTML=
-demoData[key] || "未找到该菜单（后续会接入完整权限库）";
+demoData[key]
+? "有权限岗位：<br>" + demoData[key].join("<br><br>")
+: "未找到该菜单..."
 }
 </script>
 
