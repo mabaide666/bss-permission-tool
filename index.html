@@ -69,7 +69,9 @@ if(roleText){
     if(!demoData[name]){
         demoData[name] = [];
     }
+if(!demoData[name].includes(roleText)){
     demoData[name].push(roleText);
+}
 }
 });
 });
