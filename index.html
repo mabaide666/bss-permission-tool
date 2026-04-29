@@ -56,12 +56,17 @@ border-radius:8px;
 </div>
 
 <script>
-const demoData = {
-"新增（厂）":"有权限岗位：服务总监、备件经理",
-"新增（店）":"有权限岗位：店端超管、备件经理",
-"查询":"有权限岗位：服务顾问、服务总监",
-"仓位维护":"有权限岗位：备件经理"
-};
+let demoData = {};
+
+fetch('data.json')
+.then(res => res.json())
+.then(data=>{
+    data.menus.forEach(item=>{
+        let name = item.full_path.split(' / ').pop();
+        demoData[name] =
+            "有权限岗位： " + item.roles.join("、");
+    });
+});
 
 function search(){
 let key=document.getElementById("menu").value.trim();
