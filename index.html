@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>BSS权限查询</title>
+<style>
+body{
+font-family:Arial;
+margin:40px;
+background:#f5f7fb;
+}
+h1{
+color:#1f4e79;
+}
+.box{
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 2px 10px rgba(0,0,0,.08);
+max-width:900px;
+}
+input{
+width:300px;
+padding:10px;
+margin:10px 0;
+}
+button{
+padding:10px 20px;
+background:#1f6feb;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+#result{
+margin-top:20px;
+padding:15px;
+background:#eef4ff;
+border-radius:8px;
+}
+</style>
+</head>
+<body>
+
+<div class="box">
+<h1>BSS岗位权限查询（Demo）</h1>
+
+<p>先做一个网页版原型，后面再接入你的Excel权限数据。</p>
+
+<input id="menu" placeholder="输入菜单名称，例如：订单创建">
+<button onclick="search()">查询</button>
+
+<div id="result">
+请输入菜单名称查询
+</div>
+</div>
+
+<script>
+const demoData = {
+"订单创建":"有权限岗位：备件经理、店端超管",
+"索赔申请":"有权限岗位：服务顾问、索赔经理",
+"库存维护":"有权限岗位：备件经理"
+};
+
+function search(){
+let key=document.getElementById("menu").value.trim();
+document.getElementById("result").innerHTML=
+demoData[key] || "未找到该菜单（后续会接入完整权限库）";
+}
+</script>
+
+</body>
+</html>
