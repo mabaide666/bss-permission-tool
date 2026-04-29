@@ -2,87 +2,537 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>BSS权限查询</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BSS岗位权限查看器</title>
 <style>
+:root{
+  --bg:#f4f7fb;
+  --card:#ffffff;
+  --primary:#1f4e79;
+  --blue:#2563eb;
+  --line:#d9e2ef;
+  --muted:#6b7280;
+  --soft:#eef4ff;
+  --text:#111827;
+}
+*{box-sizing:border-box}
 body{
-font-family:Arial;
-margin:40px;
-background:#f5f7fb;
+  margin:0;
+  font-family:Arial,"Microsoft YaHei",sans-serif;
+  background:var(--bg);
+  color:var(--text);
 }
-h1{
-color:#1f4e79;
+.header{
+  padding:22px 28px;
+  background:var(--card);
+  border-bottom:1px solid var(--line);
+  box-shadow:0 2px 10px rgba(15,23,42,.04);
 }
-.box{
-background:white;
-padding:20px;
-border-radius:12px;
-box-shadow:0 2px 10px rgba(0,0,0,.08);
-max-width:900px;
+.header h1{
+  margin:0;
+  color:var(--primary);
+  font-size:28px;
 }
-input{
-width:300px;
-padding:10px;
-margin:10px 0;
+.header p{
+  margin:8px 0 0;
+  color:var(--muted);
 }
-button{
-padding:10px 20px;
-background:#1f6feb;
-color:white;
-border:none;
-border-radius:6px;
-cursor:pointer;
+.toolbar{
+  margin:18px 24px 10px;
+  padding:14px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  display:grid;
+  grid-template-columns: 180px 140px 220px 150px 1fr 150px;
+  gap:12px;
+  align-items:end;
 }
-#result{
-margin-top:20px;
-padding:15px;
-background:#eef4ff;
-border-radius:8px;
+.field label{
+  display:block;
+  font-weight:700;
+  margin-bottom:6px;
+  font-size:13px;
+  color:#374151;
+}
+select,input{
+  width:100%;
+  padding:9px 10px;
+  border:1px solid #cbd5e1;
+  border-radius:8px;
+  background:#fff;
+  font-size:14px;
+}
+.check{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  height:38px;
+  font-weight:700;
+  color:#374151;
+}
+.check input{width:auto}
+.stats{
+  margin:0 24px 10px;
+  color:#374151;
+  font-weight:700;
+}
+.main{
+  display:grid;
+  grid-template-columns: 52% 48%;
+  gap:14px;
+  margin:0 24px 24px;
+  height:calc(100vh - 190px);
+  min-height:560px;
+}
+.panel{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+.panel-title{
+  padding:12px 14px;
+  font-weight:800;
+  border-bottom:1px solid var(--line);
+  background:#f8fafc;
+}
+.tree{
+  padding:10px;
+  overflow:auto;
+  flex:1;
+  font-size:14px;
+}
+.tree ul{
+  list-style:none;
+  padding-left:20px;
+  margin:0;
+}
+.tree > ul{padding-left:0}
+.node-row{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:4px 6px;
+  border-radius:7px;
+  cursor:pointer;
+  user-select:none;
+  white-space:nowrap;
+}
+.node-row:hover{background:#eef4ff}
+.node-row.active{
+  background:#dbeafe;
+  color:#1d4ed8;
+  font-weight:800;
+}
+.toggle{
+  width:18px;
+  text-align:center;
+  color:#475569;
+  cursor:pointer;
+}
+.toggle.placeholder{color:transparent}
+.badge{
+  font-size:11px;
+  padding:2px 6px;
+  border-radius:999px;
+  background:#e5e7eb;
+  color:#374151;
+  margin-left:4px;
+}
+.badge.page{background:#dbeafe;color:#1d4ed8}
+.badge.button{background:#dcfce7;color:#166534}
+.badge.end{background:#fef3c7;color:#92400e}
+.perm{
+  color:#16a34a;
+  font-weight:900;
+  margin-left:4px;
+}
+.detail{
+  overflow:auto;
+  flex:1;
+  padding:16px;
+  line-height:1.65;
+}
+.section{
+  margin-bottom:20px;
+}
+.section h2{
+  font-size:18px;
+  color:#0f172a;
+  margin:0 0 8px;
+  padding-bottom:6px;
+  border-bottom:2px solid #e5e7eb;
+}
+.desc-box{
+  background:var(--soft);
+  border-radius:12px;
+  padding:14px;
+  font-size:16px;
+  font-weight:700;
+}
+.role-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+.role-chip{
+  padding:6px 10px;
+  border-radius:999px;
+  background:#e0f2fe;
+  color:#075985;
+  font-weight:700;
+}
+.role-chip.no{
+  background:#f3f4f6;
+  color:#6b7280;
+}
+.kv{
+  display:grid;
+  grid-template-columns:110px 1fr;
+  gap:8px;
+  border-bottom:1px dashed #e5e7eb;
+  padding:5px 0;
+}
+.kv .k{font-weight:700;color:#374151}
+.empty{
+  color:#6b7280;
+  padding:20px;
+}
+.hidden{display:none}
+@media(max-width:1100px){
+  .toolbar{grid-template-columns:1fr 1fr}
+  .main{grid-template-columns:1fr;height:auto}
+  .panel{min-height:520px}
 }
 </style>
 </head>
 <body>
+<header class="header">
+  <h1>BSS岗位权限查看器</h1>
+  <p>基于Excel权限矩阵生成，可按岗位、端类型、一级中心、层级和关键词筛选。</p>
+</header>
 
-<div class="box">
-<h1>BSS岗位权限查询（Demo）</h1>
+<section class="toolbar">
+  <div class="field">
+    <label>岗位</label>
+    <select id="roleSelect"></select>
+  </div>
+  <div class="field">
+    <label>端类型</label>
+    <select id="endSelect"></select>
+  </div>
+  <div class="field">
+    <label>一级中心</label>
+    <select id="rootSelect"></select>
+  </div>
+  <div class="field">
+    <label>显示层级</label>
+    <select id="levelSelect"></select>
+  </div>
+  <div class="field">
+    <label>搜索</label>
+    <input id="searchInput" placeholder="输入菜单、路径、说明、备注">
+  </div>
+  <label class="check">
+    <input type="checkbox" id="onlyGranted">
+    只看已授权
+  </label>
+</section>
 
-<p>先做一个网页版原型，后面再接入你的Excel权限数据。</p>
+<div class="stats" id="stats">正在加载数据...</div>
 
-<input id="menu" placeholder="输入菜单名称，例如：订单创建">
-<button onclick="search()">查询</button>
+<main class="main">
+  <section class="panel">
+    <div class="panel-title">菜单树</div>
+    <div class="tree" id="tree"></div>
+  </section>
 
-<div id="result">
-请输入菜单名称查询
-</div>
-</div>
+  <section class="panel">
+    <div class="panel-title">详情</div>
+    <div class="detail" id="detail">
+      <div class="empty">请选择左侧菜单。</div>
+    </div>
+  </section>
+</main>
 
 <script>
-let demoData = {};
+let rawData = null;
+let menus = [];
+let roles = [];
+let selectedNodeRows = [];
 
-fetch('data.json')
-.then(res => res.json())
-.then(data=>{
-    data.menus.forEach(item=>{
-        let name = item.full_path.split(' / ').pop();
-let roleText = item.roles.join("、");
+const roleSelect = document.getElementById("roleSelect");
+const endSelect = document.getElementById("endSelect");
+const rootSelect = document.getElementById("rootSelect");
+const levelSelect = document.getElementById("levelSelect");
+const searchInput = document.getElementById("searchInput");
+const onlyGranted = document.getElementById("onlyGranted");
+const treeDiv = document.getElementById("tree");
+const detailDiv = document.getElementById("detail");
+const statsDiv = document.getElementById("stats");
 
-if(roleText){
-    if(!demoData[name]){
-        demoData[name] = [];
+function safeText(v){
+  return (v === null || v === undefined) ? "" : String(v).trim();
+}
+function esc(s){
+  return safeText(s).replace(/[&<>"']/g, m => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  }[m]));
+}
+function unique(arr){
+  return [...new Set(arr.filter(x => safeText(x)))];
+}
+function getLevelKeys(){
+  if(!menus.length) return [];
+  const keys = new Set();
+  menus.forEach(m => Object.keys(m.levels || {}).forEach(k => keys.add(k)));
+  return [...keys].sort((a,b)=>Number(a.split("_")[1])-Number(b.split("_")[1]));
+}
+function getPathLevels(menu, limit){
+  const levelKeys = getLevelKeys();
+  let values = [];
+  levelKeys.forEach(k=>{
+    const n = Number(k.split("_")[1]);
+    const v = safeText(menu.levels?.[k]);
+    if(v && (!limit || n <= limit)) values.push(v);
+  });
+  return values;
+}
+function menuLeafName(menu, limit){
+  const levels = getPathLevels(menu, limit);
+  return levels[levels.length - 1] || safeText(menu.full_path) || safeText(menu.menu_id);
+}
+function hasRole(menu, role){
+  if(!role || role === "全部岗位") return false;
+  return (menu.roles || []).includes(role);
+}
+function filteredMenus(){
+  const role = roleSelect.value;
+  const end = endSelect.value;
+  const root = rootSelect.value;
+  const keyword = safeText(searchInput.value).toLowerCase();
+
+  return menus.filter(m=>{
+    if(end !== "全部" && safeText(m.end_type) !== end) return false;
+
+    const level1 = safeText(m.levels?.level_1);
+    if(root !== "全部" && level1 !== root) return false;
+
+    if(role !== "全部岗位" && onlyGranted.checked && !hasRole(m, role)) return false;
+
+    if(keyword){
+      const pool = [
+        m.menu_id,
+        m.end_type,
+        m.menu_type,
+        m.full_path,
+        m.function_desc,
+        m.remark,
+        ...Object.values(m.levels || {})
+      ].join(" ").toLowerCase();
+      if(!pool.includes(keyword)) return false;
     }
-if(!demoData[name].includes(roleText)){
-    demoData[name].push(roleText);
+    return true;
+  });
 }
-}
-});
-});
-function search(){
-let key=document.getElementById("menu").value.trim();
-document.getElementById("result").innerHTML=
-demoData[key]
-? "有权限岗位：<br>" + demoData[key].join("<br><br>")
-: "未找到该菜单..."
-}
-</script>
+function buildTree(items){
+  const limitText = levelSelect.value;
+  const limit = limitText === "全部" ? null : Number(limitText.replace("level_", ""));
+  const root = {children:{}, rows:[]};
 
+  items.forEach(menu=>{
+    const levels = getPathLevels(menu, limit);
+    if(!levels.length) return;
+    let current = root;
+    levels.forEach((label, idx)=>{
+      const isLast = idx === levels.length - 1;
+      // 完整层级下，页面/按钮叶子用menu_id区分；折叠层级下按路径合并。
+      let key = label;
+      if(isLast && !limit && ["页面","按钮"].includes(safeText(menu.menu_type))){
+        key = label + "__" + safeText(menu.menu_id);
+      }
+      if(!current.children[key]){
+        current.children[key] = {label, children:{}, rows:[], key};
+      }
+      current = current.children[key];
+      current.rows.push(menu);
+    });
+  });
+  return root;
+}
+function renderTree(){
+  const items = filteredMenus();
+  const pages = items.filter(m=>safeText(m.menu_type)==="页面").length;
+  const buttons = items.filter(m=>safeText(m.menu_type)==="按钮").length;
+  statsDiv.textContent = `当前菜单数：${items.length}    页面数：${pages}    按钮数：${buttons}`;
+
+  const tree = buildTree(items);
+  treeDiv.innerHTML = "";
+  const ul = renderNodeChildren(tree);
+  treeDiv.appendChild(ul);
+}
+function renderNodeChildren(node){
+  const ul = document.createElement("ul");
+  const children = Object.values(node.children);
+  children.forEach(child=>{
+    const li = document.createElement("li");
+    const row = document.createElement("div");
+    row.className = "node-row";
+
+    const hasChildren = Object.keys(child.children).length > 0;
+    const toggle = document.createElement("span");
+    toggle.className = hasChildren ? "toggle" : "toggle placeholder";
+    toggle.textContent = hasChildren ? "▾" : "·";
+
+    const label = document.createElement("span");
+    label.textContent = child.label;
+
+    const first = child.rows[0] || {};
+    const role = roleSelect.value;
+    const anyGranted = role !== "全部岗位" && child.rows.some(m=>hasRole(m, role));
+
+    row.appendChild(toggle);
+    row.appendChild(label);
+
+    if(anyGranted){
+      const perm = document.createElement("span");
+      perm.className = "perm";
+      perm.textContent = "√";
+      row.appendChild(perm);
+    }
+
+    if(!hasChildren){
+      const type = safeText(first.menu_type);
+      if(type){
+        const b = document.createElement("span");
+        b.className = "badge " + (type==="页面" ? "page" : type==="按钮" ? "button" : "");
+        b.textContent = type;
+        row.appendChild(b);
+      }
+      const end = safeText(first.end_type);
+      if(end){
+        const e = document.createElement("span");
+        e.className = "badge end";
+        e.textContent = end;
+        row.appendChild(e);
+      }
+    }
+
+    row.onclick = (ev)=>{
+      ev.stopPropagation();
+      document.querySelectorAll(".node-row.active").forEach(x=>x.classList.remove("active"));
+      row.classList.add("active");
+      selectedNodeRows = child.rows || [];
+      renderDetail(child);
+    };
+
+    li.appendChild(row);
+
+    if(hasChildren){
+      const childUl = renderNodeChildren(child);
+      li.appendChild(childUl);
+      toggle.onclick = (ev)=>{
+        ev.stopPropagation();
+        childUl.classList.toggle("hidden");
+        toggle.textContent = childUl.classList.contains("hidden") ? "▸" : "▾";
+      };
+    }
+    ul.appendChild(li);
+  });
+  return ul;
+}
+function renderDetail(node){
+  const rows = node.rows || [];
+  if(!rows.length){
+    detailDiv.innerHTML = `<div class="empty">这是目录节点。</div>`;
+    return;
+  }
+  const first = rows[0];
+  const grantedRoles = unique(rows.flatMap(m=>m.roles || []));
+  const allRolesStatus = roles.map(r=>({
+    role:r,
+    granted: rows.some(m=>(m.roles || []).includes(r))
+  }));
+
+  const isFolded = rows.length > 1 && Object.keys(node.children || {}).length > 0;
+  const desc = safeText(first.function_desc) || "未填写";
+  const remark = safeText(first.remark) || "-";
+
+  detailDiv.innerHTML = `
+    ${isFolded ? `
+      <div class="section">
+        <h2>折叠层级提示</h2>
+        <div class="desc-box">当前节点下包含 ${rows.length} 条菜单资源。如需查看更细菜单，请调整“显示层级”。</div>
+      </div>` : ""}
+    <div class="section">
+      <h2>功能说明</h2>
+      <div class="desc-box">${esc(desc)}</div>
+    </div>
+    <div class="section">
+      <h2>权限情况</h2>
+      <div class="role-list">
+        ${grantedRoles.length ? grantedRoles.map(r=>`<span class="role-chip">${esc(r)}</span>`).join("") : `<span class="role-chip no">暂无已授权岗位</span>`}
+      </div>
+    </div>
+    <div class="section">
+      <h2>完整信息</h2>
+      <div class="kv"><div class="k">menu_id</div><div>${esc(safeText(first.menu_id))}</div></div>
+      <div class="kv"><div class="k">端类型</div><div>${esc(safeText(first.end_type) || "-")}</div></div>
+      <div class="kv"><div class="k">菜单类型</div><div>${esc(safeText(first.menu_type) || "-")}</div></div>
+      <div class="kv"><div class="k">完整路径</div><div>${esc(safeText(first.full_path))}</div></div>
+    </div>
+    <div class="section">
+      <h2>全部岗位权限状态</h2>
+      <div class="role-list">
+        ${allRolesStatus.map(x=>`<span class="role-chip ${x.granted ? "" : "no"}">${x.granted ? "√" : "×"} ${esc(x.role)}</span>`).join("")}
+      </div>
+    </div>
+    <div class="section">
+      <h2>层级信息</h2>
+      ${Object.entries(first.levels || {}).filter(([k,v])=>safeText(v)).map(([k,v])=>`<div class="kv"><div class="k">${esc(k)}</div><div>${esc(v)}</div></div>`).join("")}
+    </div>
+    <div class="section">
+      <h2>备注</h2>
+      <div class="desc-box">${esc(remark)}</div>
+    </div>
+  `;
+}
+function initFilters(){
+  roles = rawData.roles || [];
+  menus = rawData.menus || [];
+
+  roleSelect.innerHTML = ["全部岗位", ...roles].map(x=>`<option>${esc(x)}</option>`).join("");
+
+  const ends = ["全部", ...unique(menus.map(m=>m.end_type))];
+  endSelect.innerHTML = ends.map(x=>`<option>${esc(x)}</option>`).join("");
+
+  const roots = ["全部", ...unique(menus.map(m=>m.levels?.level_1)).sort()];
+  rootSelect.innerHTML = roots.map(x=>`<option>${esc(x)}</option>`).join("");
+
+  const maxLevel = getLevelKeys().length;
+  const levels = ["全部", ...Array.from({length:maxLevel},(_,i)=>`level_${i+1}`)];
+  levelSelect.innerHTML = levels.map(x=>`<option>${esc(x)}</option>`).join("");
+
+  [roleSelect,endSelect,rootSelect,levelSelect,onlyGranted].forEach(el=>el.addEventListener("change", renderTree));
+  searchInput.addEventListener("input", renderTree);
+
+  renderTree();
+}
+
+fetch("data.json")
+  .then(res=>res.json())
+  .then(data=>{
+    rawData = data;
+    initFilters();
+  })
+  .catch(err=>{
+    statsDiv.textContent = "data.json 加载失败";
+    treeDiv.innerHTML = `<div class="empty">无法读取 data.json，请确认文件已上传到仓库根目录。</div>`;
+    console.error(err);
+  });
+</script>
 </body>
 </html>
