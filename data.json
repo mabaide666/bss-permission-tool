@@ -29,145 +29,145 @@
     "L2 Warranty Manager": {
       "role_name": "L2 Warranty Manager",
       "end_type": "店端",
-      "description": "",
+      "description": "BYD二级店索赔经理",
       "remark": "来自BSS角色权限_V2"
     },
     "L1 Parts Manager": {
       "role_name": "L1 Parts Manager",
       "end_type": "店端",
-      "description": "",
+      "description": "BYD一级店备件经理",
       "remark": "来自BSS角色权限_V2"
     },
     "技术支持": {
       "role_name": "技术支持",
       "end_type": "厂端",
-      "description": "",
+      "description": "厂端审批预授权，上传维护工时代码",
       "remark": "来自BSS角色权限_V2"
     },
     "L1 Customer Care Manager": {
       "role_name": "L1 Customer Care Manager",
       "end_type": "店端",
-      "description": "",
+      "description": "BYD一级店客户关怀经理",
       "remark": "来自BSS角色权限_V2"
     },
     "Finance Manager": {
       "role_name": "Finance Manager",
       "end_type": "店端",
-      "description": "",
+      "description": "BYD一/二级店财务经理",
       "remark": "来自BSS角色权限_V2"
     },
     "L2 Customer Care Manager": {
       "role_name": "L2 Customer Care Manager",
       "end_type": "店端",
-      "description": "",
+      "description": "BYD二级店客户关怀经理",
       "remark": "来自BSS角色权限_V2"
     },
     "L1 Aftersales Manager": {
       "role_name": "L1 Aftersales Manager",
       "end_type": "店端",
-      "description": "",
+      "description": "BYD一级店售后服务总监",
       "remark": "来自BSS角色权限_V2"
     },
     "Repair Technician": {
       "role_name": "Repair Technician",
       "end_type": "店端",
-      "description": "",
+      "description": "BYD一/二级店维修技工",
       "remark": "来自BSS角色权限_V2"
     },
     "L1 Warranty Manager": {
       "role_name": "L1 Warranty Manager",
       "end_type": "店端",
-      "description": "",
+      "description": "BYD一级店索赔经理",
       "remark": "来自BSS角色权限_V2"
     },
     "索赔数据": {
       "role_name": "索赔数据",
       "end_type": "厂端",
-      "description": "",
+      "description": "厂端维护整车质保数据等索赔相关数据",
       "remark": "来自BSS角色权限_V2"
     },
     "备件订单": {
       "role_name": "备件订单",
       "end_type": "厂端",
-      "description": "",
+      "description": "厂端审核、检查订单。客户端无法订购时排查问题（因为问题的多样性，所以有所有跟备件相关的菜单的查询权限）。延期订单维护。异常订单提报。库存查询。价格查询。服务商信息查询。服务店收货地址维护。系统生成的发票查询、下载。CI制作。工单查询。维修历史查询。品牌车系车型查询。",
       "remark": "来自BSS角色权限_V2"
     },
     "索赔审核": {
       "role_name": "索赔审核",
       "end_type": "厂端",
-      "description": "",
+      "description": "厂端审批来自经销商的索赔单。索赔结算生成。",
       "remark": "来自BSS角色权限_V2"
     },
     "Service Advisor": {
       "role_name": "Service Advisor",
       "end_type": "店端",
-      "description": "",
+      "description": "BYD一/二级店服务顾问",
       "remark": "来自BSS角色权限_V2"
     },
     "备件计划": {
       "role_name": "备件计划",
       "end_type": "厂端",
-      "description": "",
+      "description": "厂端备件计划，A990订单创建。发票上传。ETA信息维护。库存查询。备件主数据查询。价格查询。服务商信息查询。NSC延期订单提报。",
       "remark": "来自BSS角色权限_V2"
     },
     "L2 Aftersales Manager": {
       "role_name": "L2 Aftersales Manager",
       "end_type": "店端",
-      "description": "",
+      "description": "BYD二级店售后服务总监",
       "remark": "来自BSS角色权限_V2"
     },
     "L1 Parts Specialist": {
       "role_name": "L1 Parts Specialist",
       "end_type": "店端",
-      "description": "",
+      "description": "BYD一级店备件专员",
       "remark": "来自BSS角色权限_V2"
     },
     "技术推进": {
       "role_name": "技术推进",
       "end_type": "厂端",
-      "description": "",
+      "description": "厂端VPC经理审核PDI单。交车日期维护。VIN码导出。车辆信息更改（所属服务店、国家）。按类别查询索赔单历史。技术项目有关的报表管理。索赔结算单查询与导出。索赔工时查询与导出。TN的创建维护与执行情况跟进。通过VIN码查询当前OTA版本，完成情况和车辆情况查询。",
       "remark": "来自BSS角色权限_V2"
     },
     "售后商务经理": {
       "role_name": "售后商务经理",
       "end_type": "厂端",
-      "description": "",
+      "description": "Blair做审批用，具体菜单权限区别需再次确认。",
       "remark": "来自BSS角色权限_V2"
     },
     "售后商务专员": {
       "role_name": "售后商务专员",
       "end_type": "厂端",
-      "description": "",
+      "description": "厂端备件价格维护（订购价格，建议零售价，折扣配置）。订单查询。物料主数据查询与导出。备件发票查询与导出。国际化里面的汇率维护。审核工时单价政策变更。审核索赔工时单价和Mark up政策变更。",
       "remark": "来自BSS角色权限_V2"
     },
     "厂端超级管理员": {
       "role_name": "厂端超级管理员",
       "end_type": "厂端",
-      "description": "",
+      "description": "厂端超管",
       "remark": "来自BSS角色权限_V2"
     },
     "L2 Parts Manager": {
       "role_name": "L2 Parts Manager",
       "end_type": "店端",
-      "description": "",
+      "description": "BYD二级店备件经理",
       "remark": "来自BSS角色权限_V2"
     },
     "腾势游侠": {
       "role_name": "腾势游侠",
       "end_type": "厂端",
-      "description": "",
+      "description": "厂端腾势游侠相关业务",
       "remark": "来自BSS角色权限_V2"
     },
     "区域经理": {
       "role_name": "区域经理",
       "end_type": "厂端",
-      "description": "",
+      "description": "区域经理，审批经济类善意索赔，查询所有业务",
       "remark": "来自BSS角色权限_V2"
     },
     "L1 Workshop Manager": {
       "role_name": "L1 Workshop Manager",
       "end_type": "店端",
-      "description": "",
+      "description": "BYD一级店车间经理",
       "remark": "来自BSS角色权限_V2"
     }
   },
@@ -54123,7 +54123,7 @@
     "no_role_menu_count": 0,
     "no_function_desc_menu_count": 2116,
     "duplicate_group_count": 47,
-    "no_role_description_count": 24,
+    "no_role_description_count": 0,
     "no_role_menu_ids": [],
     "no_function_desc_menu_ids": [
       "M0001",
@@ -54327,31 +54327,6 @@
       "M0199",
       "M0200"
     ],
-    "no_role_description_roles": [
-      "L2 Warranty Manager",
-      "L1 Parts Manager",
-      "技术支持",
-      "L1 Customer Care Manager",
-      "Finance Manager",
-      "L2 Customer Care Manager",
-      "L1 Aftersales Manager",
-      "Repair Technician",
-      "L1 Warranty Manager",
-      "索赔数据",
-      "备件订单",
-      "索赔审核",
-      "Service Advisor",
-      "备件计划",
-      "L2 Aftersales Manager",
-      "L1 Parts Specialist",
-      "技术推进",
-      "售后商务经理",
-      "售后商务专员",
-      "厂端超级管理员",
-      "L2 Parts Manager",
-      "腾势游侠",
-      "区域经理",
-      "L1 Workshop Manager"
-    ]
+    "no_role_description_roles": []
   }
 }
